@@ -1,14 +1,17 @@
-package week2.day1;
+package week2.day2;
+
+import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 
 
-public class Assignment1CreateLead {
+public class DropDown{
 	
 	public static void main(String[] args) {
 
@@ -17,9 +20,12 @@ public class Assignment1CreateLead {
 			// Open a chrome browser
 			ChromeDriver driver = new ChromeDriver();
 			//Load the URL to test
-			driver.get("www.google.com");
+			driver.get("http://leaftaps.com/opentaps/control/main");
 	        // Maximize the browser
 			driver.manage().window().maximize();
+			
+			//implicitly wait
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		
 			
 			//Find an elementUsername
@@ -80,22 +86,38 @@ public class Assignment1CreateLead {
 			enterEmailAddress.sendKeys("franciscarol126@gmail.com");
 			
 			
-			 //Click on Create Button
+			//Select Employee from Source
+			 
+			WebElement elementSource = driver.findElement(By.id("createLeadForm_dataSourceId"));
 			
-			WebElement entersubmit = driver.findElement(By.className("smallSubmit"));
-			entersubmit.click();
+			// create object for select class and pass the parent web element
+			Select source = new Select(elementSource);
 			
-	         //Get the Title of Resulting Page. refer the video  using driver.getTitle() 
-		
-			String title = driver.getTitle();
-			System.out.println("The title of the page is " + title);
+			// select the option using visible text
 			
-			if(title.contains("View Lead")){
-				
-				System.out.println("I confirm the titile has  View Lead | opentaps CRM ");
-			} else {
-				System.out.println(" The title doesnot have View Lead | opentaps CRM");
-			}
+			source.selectByVisibleText("Employee");
+			
+			//Select finance from Industry
+			WebElement elemtIndustry = driver.findElement(By.id("createLeadForm_industryEnumId"));
+			// create object for select class and pass the parent web element
+
+			Select industry = new Select(elemtIndustry);
+			// select the option using value 
+		 industry.selectByValue("IND_FINANCE");
+		 
+		 WebElement elementOwnership = driver.findElement(By.id("createLeadForm_ownershipEnumId"));
+		 
+		 Select ownership = new Select (elementOwnership);
+		 ownership.selectByIndex(5);
+		 
+
+			
+			
+			
+			
+			
+			
+			
 			
 }
 }
